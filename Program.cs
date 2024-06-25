@@ -27,8 +27,8 @@ class Program
             // Read all text from the file
             string text = File.ReadAllText(filePath);
 
-            // Use regex to find words (sequences of letters or numbers)
-            var regex = new Regex(@"\b[\p{L}\p{N}]+\b", RegexOptions.IgnoreCase);
+            // Use regex to find words (sequences of letters)
+            var regex = new Regex(@"\b(?![0-9])[\p{L}\p{N}]+\b", RegexOptions.IgnoreCase);
             var matches = regex.Matches(text);
 
             // Extract words from matches
@@ -41,13 +41,13 @@ class Program
             // Remove duplicates, sort lexicographically and take first 5
             var sortedWords = words
                 .Distinct(StringComparer.OrdinalIgnoreCase) // Case insensitive distinct
-                .OrderBy(word => word, StringComparer.OrdinalIgnoreCase); // Case insensitive sort
-                
+                .OrderBy(word => word, StringComparer.OrdinalIgnoreCase) // Case insensitive sort
+                ;
 
             // Output the sorted words
             foreach (var word in sortedWords)
             {
-                Console.WriteLine(word);
+                Console.WriteLine(word.ToUpper());
             }
         }
         catch (Exception ex)
